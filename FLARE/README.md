@@ -29,7 +29,7 @@ This solution enables CubeSats to take immediate protective actions, improving m
 ---
 ## Demonstration
 A prototype has been implemented on the **Digilent Nexys A7 FPGA** board.  
-![Prototype circuit](/home/monica/Downloads/fpga.jpeg)  
+![Prototype circuit](https://drive.google.com/file/d/1z73-d8-dctAuwlT51CXtoeouHI_QQ75u/view?usp=sharing)
 [Watch the demonstration video](/home/monica/FLARE/Visuals/Prototype.mp4)  
 
 ---
