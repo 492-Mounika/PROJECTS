@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Sign in | PeopleDesk{% endblock %}
+{% block content %}
+<section class="login-layout">
+    <div class="login-copy">
+        <p class="eyebrow">EMPLOYEE EXPERIENCE, SIMPLIFIED</p>
+        <h1>Welcome to<br>PeopleDesk.</h1>
+        <p class="subtitle">A single workspace for employee leave requests and HR approvals.</p>
+        <div class="feature-pills"><span>Employee self-service</span><span>HR approvals</span><span>Request tracking</span></div>
+    </div>
+    <div class="panel login-panel">
+        <p class="eyebrow">YOUR WORKSPACE</p>
+        <h2>Sign in to continue</h2>
+        <p class="muted intro">Use your registered account credentials.</p>
+        <form method="post" class="form">
+            <label>Email address<input type="email" name="email" placeholder="you@example.com" required autocomplete="username"></label>
+            <label>Password<input type="password" name="password" placeholder="Enter password" required autocomplete="current-password"></label>
+            <button type="submit">Sign in</button>
+        </form>
+        <div class="demo-box">
+            <strong>Local demo accounts</strong>
+            <p><b>HR:</b> admin@peopledesk.com / Admin@123</p>
+            <p><b>Employee:</b> rahul@example.com / Rahul@123</p>
+            <p><b>Employee:</b> priya@example.com / Priya@123</p>
+            <small>Demo credentials only. Change them before any real deployment.</small>
+        </div>
+    </div>
+</section>
+{% endblock %}

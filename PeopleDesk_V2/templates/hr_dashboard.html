@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}HR dashboard | PeopleDesk{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <div><p class="eyebrow">HR ADMINISTRATION PORTAL</p><h1>HR Dashboard</h1>
+    <p class="subtitle">Manage employee accounts and review leave requests.</p></div>
+    <span class="role-chip hr-chip">HR workspace</span>
+</section>
+
+<section class="stats">
+    <article class="stat-card"><span>Employees</span><strong>{{ stats.employees }}</strong></article>
+    <article class="stat-card"><span>Pending requests</span><strong>{{ stats.pending }}</strong></article>
+    <article class="stat-card"><span>Approved</span><strong>{{ stats.approved }}</strong></article>
+    <article class="stat-card"><span>Rejected</span><strong>{{ stats.rejected }}</strong></article>
+</section>
+
+<section class="two-column">
+    <article class="panel">
+        <p class="eyebrow">PEOPLE DIRECTORY</p><h2>Create employee account</h2>
+        <form action="{{ url_for('add_employee') }}" method="post" class="form spaced">
+            <label>Full name<input name="name" placeholder="Employee name" required></label>
+            <label>Work email<input type="email" name="email" placeholder="employee@example.com" required></label>
+            <label>Department<select name="department" required>
+                <option value="">Choose department</option><option>Engineering</option>
+                <option>Human Resources</option><option>Finance</option>
+                <option>Sales</option><option>Operations</option>
+            </select></label>
+            <label>Temporary password<input type="password" name="password" minlength="8" placeholder="At least 8 characters" required></label>
+            <button type="submit">Create employee</button>
+        </form>
+    </article>
+    <article class="panel">
+        <p class="eyebrow">EMPLOYEE DIRECTORY</p><h2>Registered employees</h2>
+        {% if employees %}
+        <div class="employee-list">{% for employee in employees %}
+            <div class="employee"><span class="avatar">{{ employee.name[0]|upper }}</span>
+                <div><strong>{{ employee.name }}</strong><small>{{ employee.email }} · {{ employee.department }}</small></div>
+            </div>
+        {% endfor %}</div>
+        {% else %}<p class="empty">No employees registered.</p>{% endif %}
+    </article>
+</section>
+
+<section class="panel">
+    <div class="panel-heading"><div><p class="eyebrow">WORKFLOW QUEUE</p><h2>All leave requests</h2></div><span class="count">{{ requests|length }} total</span></div>
+    {% if requests %}
+    <div class="table-wrap"><table>
+        <thead><tr><th>Employee</th><th>Dates</th><th>Days</th><th>Reason</th><th>Status</th><th>Decision</th></tr></thead>
+        <tbody>{% for item in requests %}
+        <tr><td><strong>{{ item.employee_name }}</strong><small>{{ item.department }}</small></td>
+        <td>{{ item.start_date }}<small>to {{ item.end_date }}</small></td>
+        <td>{{ item.days }}</td><td class="reason">{{ item.reason }}</td>
+        <td><span class="status {{ item.status|lower }}">{{ item.status }}</span></td>
+        <td>{% if item.status == 'Pending' %}
+            <div class="actions">
+                <form method="post" action="{{ url_for('update_leave_status', request_id=item.id, action='approve') }}"><button class="small approve" type="submit">Approve</button></form>
+                <form method="post" action="{{ url_for('update_leave_status', request_id=item.id, action='reject') }}"><button class="small reject" type="submit">Reject</button></form>
+            </div>
+        {% else %}<span class="muted">Processed</span>{% endif %}</td></tr>
+        {% endfor %}</tbody>
+    </table></div>
+    {% else %}<p class="empty">No leave requests have been submitted.</p>{% endif %}
+</section>
+{% endblock %}
